@@ -11,12 +11,30 @@
 
 <body>
     <div ng-app="app" ng-controller="controller">
-        <!-- Year -->
-        <select ng-options="year for year in years" ng-model="selectedYear" ng-change="updateReleases()"></select>
 
-        <!-- Releases -->
-        <select ng-options="release for release in releases" ng-model="selectedRelease"></select>
+        <label for="search">Filter topic: </label>
+        <input type="text" ng-model="search.topic">
+        <br>
+        <br>
 
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Topic</td>
+                    <td>Number of Contributions</td>
+                    <td>Number of Tests</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in tableData | filter: search">
+                    <td>{{row.id}}</td>
+                    <td>{{row.topic}}</td>
+                    <td>{{row.contributions}}</td>
+                    <td>{{row.tests}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 
