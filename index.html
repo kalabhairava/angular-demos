@@ -3,38 +3,19 @@
 <head>
     <title>Angular Bare</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-resource.js"></script>
     <script src="app.js"></script>
     <meta name="viewport" content="width=device-width initial-scale=1">
     <style>
+        h2 {
+            background-color: #fb0;
+        }
     </style>
 </head>
 
 <body>
     <div ng-app="app" ng-controller="controller">
 
-        <label for="search">Filter topic: </label>
-        <input type="text" ng-model="search.topic">
-        <br>
-        <br>
-
-        <table>
-            <thead>
-                <tr>
-                    <td>ID</td>
-                    <td>Topic</td>
-                    <td>Number of Contributions</td>
-                    <td>Number of Tests</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="row in tableData | filter: search">
-                    <td>{{row.id}}</td>
-                    <td>{{row.topic}}</td>
-                    <td>{{row.contributions}}</td>
-                    <td>{{row.tests}}</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </body>
 
