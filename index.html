@@ -7,14 +7,47 @@
     <script src="app.js"></script>
     <meta name="viewport" content="width=device-width initial-scale=1">
     <style>
-        h2 {
-            background-color: #fb0;
+        .searchBox {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .searchBox__label {
+            font-size: 36px;
+            color: #222222;
+            margin-bottom: 10px;
+        }
+
+        .searchBox__input {
+            width: 30vw;
+            font-size: 18px;
+            padding: 10px;
+            border: 2px solid #222222;
+            border-radius: 3px;
+        }
+
+        .searchBox__input:focus {
+            outline: none;
         }
     </style>
 </head>
 
 <body>
     <div ng-app="app" ng-controller="controller">
+        <div class="searchBox">
+            <label class="searchBox__label" for="search">Search</label>
+            <input class="searchBox__input" id="search" ng-model="searchText" ng-change="onSearchTextChange(searchText)">
+
+            <ul>
+                <li ng-repeat="result in results" ng-click="updateInputBox(result)">
+                    {{result}}
+                </li>
+            </ul>
+        </div>
+
 
     </div>
 </body>
