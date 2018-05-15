@@ -1,39 +1,43 @@
-const app = angular.module("app", ["ngResource"]).controller("controller", Controller);
+const app = angular.module('app', ['ngResource']).controller('controller', Controller);
 
-Controller.$inject = ["$scope", "$http", "$resource"];
+Controller.$inject = ['$scope', '$http', '$resource'];
 
 function Controller($scope, $http, $resource) {
-  $scope.searchText = "";
+  $scope.searchText = '';
 
-  const SEPARATOR = " ";
+  const SEPARATOR = ' ';
 
-  $scope.onSearchTextChange = function(searchText) {
+  $scope.onSearchTextChange = function() {
+    const searchText = $scope.searchText;
     const tokens = searchText.split(SEPARATOR);
 
-    const results = getSuggestions(tokens[tokens.length - 1]).then(
-      onGetSuggestionsSuccess,
-      onGetSuggestionsFailure
-    );
+    getSuggestions(tokens[tokens.length - 1]).then(onGetSuggestionsSuccess, onGetSuggestionsFailure);
 
     function onGetSuggestionsSuccess(results) {
       $scope.results = results;
+
+      // Trigger digest cycle manually - https://www.jeffryhouser.com/index.cfm/2014/6/2/How-do-I-run-code-when-a-variable-changes-with-AngularJS
+      // The digest cycle won't be run when you execute JS code outside of angular context.
+      // In this case, it is happening because of server code written at the bottom
+      $scope.$apply();
     }
 
     function onGetSuggestionsFailure(error) {
       $scope.results = [];
 
-      alert(error);
+      // Trigger digest cycle
+      $scope.$apply();
     }
 
     $scope.updateInputBox = function(value) {
       let tokens = $scope.searchText.split(SEPARATOR);
 
-      tokens[tokens.length - 1] = value + " ";
+      tokens[tokens.length - 1] = value + ' ';
 
-      $scope.searchText = tokens.join();
+      $scope.searchText = tokens.join(' ');
       $scope.results = [];
 
-      document.getElementById("search").focus();
+      document.getElementById('search').focus();
     };
   };
 }
@@ -49,8 +53,8 @@ function getRandomBool(n) {
 }
 
 function getSuggestions(text) {
-  var pre = "pre";
-  var post = "post";
+  var pre = 'pre';
+  var post = 'post';
   var results = [];
   if (getRandomBool(2)) {
     results.push(pre + text);
